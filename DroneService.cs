@@ -87,7 +87,7 @@ namespace DroneServiceApp
         // The dequeued item must be added to the List<T> and displayed in the ListBox for finished service items.
 
         // 6.16	Create a double mouse click method that will delete a service item from the finished listbox and remove the same item from the List<T>.
-
+        //
         #endregion
 
         private void Form1_Load(object sender, EventArgs e)
