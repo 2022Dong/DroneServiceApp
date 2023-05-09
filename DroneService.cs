@@ -33,34 +33,104 @@ namespace DroneServiceApp
         // The new service item will be added to the appropriate Queue based on the Priority radio button.
         private void AddNewItem_Click(object sender, EventArgs e)
         {
-            GetServicePriority();
+            int priority = GetServicePriority();
             // ...
+            switch (priority)
+            {
+                case 1: //...
+
+                    Drone addRegDrone = new Drone();
+                    addRegDrone.setServiceTag(100); //...
+                    addRegDrone.setClientName(txtClientName.Text);
+                    addRegDrone.setDroneModel(txtDroneModel.Text);
+                    addRegDrone.setServiceProblem(txtServiceProblem.Text);
+                    addRegDrone.setServiceCost(0.0);//...
+
+                    RegularService.Enqueue(addRegDrone);
+                    displayRegularQueue();
+                    break;
+
+                case 2://...
+
+                    Drone addExpDrone = new Drone();
+                    addExpDrone.setServiceTag(100); //...
+                    addExpDrone.setClientName(txtClientName.Text);
+                    addExpDrone.setDroneModel(txtDroneModel.Text);
+                    addExpDrone.setServiceProblem(txtServiceProblem.Text);
+
+                    // 6.6	Before a new service item is added to the Express Queue the service cost must be increased by 15%.
+                    addExpDrone.setServiceCost(0.0 * 0.15);//...
+
+                    ExpressService.Enqueue(addExpDrone);
+                    displayExpressQueue();
+                    break;
+
+                default:MessageBox.Show("priority unseleted");
+                    break;
+
+            }
         }
-        // 6.6	Before a new service item is added to the Express Queue the service cost must be increased by 15%.
+
+
         #region Custom methods
         // 6.7	Create a custom method called “GetServicePriority” which returns the value of the priority radio group.
         // This method must be called inside the “AddNewItem” method before the new service item is added to a queue.
         public int GetServicePriority()
         {
-            return 0;
+            int priority = 0;
+            if (rdoRegularService.Checked)
+            {
+                priority = 1;
+            }
+            if (rdoExpressService.Checked)
+            {
+                priority = 2;
+            }
+            return priority;
         }
         // 6.8	Create a custom method that will display all the elements in the RegularService queue.
         // The display must use a List View and with appropriate column headers.
         public void displayRegularQueue()
         {
-
+            foreach (var eachDrone in RegularService)
+            {
+                ListViewItem item = new ListViewItem(eachDrone.getServiceTag().ToString()); // int or string?
+                item.SubItems.Add(eachDrone.getClientName());
+                item.SubItems.Add(eachDrone.getDroneModel());
+                item.SubItems.Add(eachDrone.getServiceProblem());
+                item.SubItems.Add(eachDrone.getServiceCost().ToString());
+                lvRegularQueue.Items.Add(item);
+            }
         }
         // 6.9	Create a custom method that will display all the elements in the ExpressService queue.
         // The display must use a List View and with appropriate column headers.
         public void displayExpressQueue()
         {
-
+            foreach (var eachDrone in ExpressService)
+            {
+                ListViewItem item = new ListViewItem(eachDrone.getServiceTag().ToString()); // int or string?
+                item.SubItems.Add(eachDrone.getClientName());
+                item.SubItems.Add(eachDrone.getDroneModel());
+                item.SubItems.Add(eachDrone.getServiceProblem());
+                item.SubItems.Add(eachDrone.getServiceCost().ToString());
+                lvExpressQueue.Items.Add(item);
+            }
         }
         // 6.10	Create a custom keypress method to ensure the Service Cost textbox
         // can only accept a double value with one decimal point.
-        public double keypressServiceCost()
+        private void txtServiceCost_KeyPress(object sender, KeyPressEventArgs e) // -----to be checked.
         {
-            return 0.0;
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+        (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
         }
         // 6.11	Create a custom method to increment the service tag control,
         // this method must be called inside the “AddNewItem” method before the new service item is added to a queue.
@@ -71,29 +141,91 @@ namespace DroneServiceApp
         // 6.17	Create a custom method that will clear all the textboxes after each service item has been added.
         public void clearInput()
         {
-
+            // set all radio buttons to un-checked
+            foreach (RadioButton rbo in gbServicePriority.Controls.OfType<RadioButton>())
+            {
+                rbo.Checked = false;
+            }
+            txtClientName.Clear();
+            txtDroneModel.Clear();
+            txtServiceProblem.Clear();
+            txtServiceCost.Clear();
+            txtServiceTag.Clear();
         }
+
         #endregion
 
         #region Mouse click events
         // 6.12	Create a mouse click method for the regular service ListView that will display the Client Name and Service Problem in the related textboxes.
+        private void lvRegularQueue_MouseClick(object sender, MouseEventArgs e)
+        {
+            Drone selectedDrone = new Drone();
+            int selectedIndex = lvRegularQueue.SelectedIndices[0];
+            // Setters
+            //data.setServiceTag(lvRegularQueue.SelectedItems[0].SubItems[0].Text);
+            selectedDrone.setClientName(lvRegularQueue.SelectedItems[0].SubItems[1].Text);
+            selectedDrone.setDroneModel(lvRegularQueue.SelectedItems[0].SubItems[2].Text);
+            selectedDrone.setServiceProblem(lvRegularQueue.SelectedItems[0].SubItems[3].Text);
+            //data.setServiceCost(lvRegularQueue.SelectedItems[0].SubItems[4].Text);
+
+            // Display
+            txtClientName.Text = selectedDrone.getClientName();
+            txtDroneModel.Text = selectedDrone.getDroneModel();
+            txtServiceProblem.Text = selectedDrone.getServiceProblem();
+            txtServiceCost.Text = selectedDrone.getServiceCost().ToString();
+        }
+
 
         // 6.13	Create a mouse click method for the express service ListView that will display the Client Name and Service Problem in the related textboxes.
-
-        // 6.14	Create a button click method that will remove a service item from the regular ListView and dequeue the regular service Queue<T> data structure.
-        // The dequeued item must be added to the List<T> and displayed in the ListBox for finished service items.
-
-        // 6.15	Create a button click method that will remove a service item from the express ListView and dequeue the express service Queue<T> data structure.
-        // The dequeued item must be added to the List<T> and displayed in the ListBox for finished service items.
-
-        // 6.16	Create a double mouse click method that will delete a service item from the finished listbox and remove the same item from the List<T>.
-        //
-        #endregion
-
-        private void Form1_Load(object sender, EventArgs e)
+        private void lvExpressQueue_MouseClick(object sender, MouseEventArgs e)
         {
 
         }
+
+        // 6.14	Create a button click method that will remove a service item from the regular ListView and dequeue the regular service Queue<T> data structure.
+        // The dequeued item must be added to the List<T> and displayed in the ListBox for finished service items.
+        private void btnDequeueReg_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Item fixed?", "Warning", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                RegularService.Dequeue();
+                displayRegularQueue(); // to be fixed, data still appears
+
+                // add to the list<T>
+
+
+
+            }
+            
+        }
+
+        // 6.15	Create a button click method that will remove a service item from the express ListView and dequeue the express service Queue<T> data structure.
+        // The dequeued item must be added to the List<T> and displayed in the ListBox for finished service items.
+        private void btnDequeueExp_Click(object sender, EventArgs e)
+        {
+            
+
+        }
+
+
+        // 6.16	Create a double mouse click method that will delete a service item from the finished listbox and remove the same item from the List<T>.
+        private void lbFinishedList_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            int selectedIndex = lbFinishedList.SelectedIndices[0];
+            DialogResult result = MessageBox.Show("Do you want to remove the item?", "Warning", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                //Update list box
+
+            }
+
+
+        }
+
+        // 6.17 see #region Custom methods
+        #endregion
+
         
     }
 }

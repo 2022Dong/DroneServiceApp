@@ -29,10 +29,15 @@
         private void InitializeComponent()
         {
             this.lvRegularQueue = new System.Windows.Forms.ListView();
+            this.colServiceTag = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colClientName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colDroneModel = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colServiceProblem = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colServiceCost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lbFinishedList = new System.Windows.Forms.ListBox();
             this.gbServicePriority = new System.Windows.Forms.GroupBox();
-            this.rdoRegularService = new System.Windows.Forms.RadioButton();
             this.rdoExpressService = new System.Windows.Forms.RadioButton();
+            this.rdoRegularService = new System.Windows.Forms.RadioButton();
             this.txtClientName = new System.Windows.Forms.TextBox();
             this.txtDroneModel = new System.Windows.Forms.TextBox();
             this.lblClientName = new System.Windows.Forms.Label();
@@ -40,23 +45,20 @@
             this.lblServiceProblem = new System.Windows.Forms.Label();
             this.lblServiceCost = new System.Windows.Forms.Label();
             this.lblServiceTag = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.txtServiceProblem = new System.Windows.Forms.TextBox();
+            this.txtServiceCost = new System.Windows.Forms.TextBox();
+            this.txtServiceTag = new System.Windows.Forms.TextBox();
             this.AddNewItem = new System.Windows.Forms.Button();
             this.lblRegularQueue = new System.Windows.Forms.Label();
             this.lblExpressQueue = new System.Windows.Forms.Label();
-            this.colServiceCost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colServiceTag = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colClientName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colDroneModel = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colServiceProblem = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvExpressQueue = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnDequeueReg = new System.Windows.Forms.Button();
+            this.btnDequeueExp = new System.Windows.Forms.Button();
             this.gbServicePriority.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,15 +68,41 @@
             this.colServiceTag,
             this.colClientName,
             this.colDroneModel,
-            this.colServiceCost,
-            this.colServiceProblem});
+            this.colServiceProblem,
+            this.colServiceCost});
             this.lvRegularQueue.HideSelection = false;
-            this.lvRegularQueue.Location = new System.Drawing.Point(185, 21);
+            this.lvRegularQueue.Location = new System.Drawing.Point(162, 21);
             this.lvRegularQueue.Name = "lvRegularQueue";
             this.lvRegularQueue.Size = new System.Drawing.Size(587, 107);
             this.lvRegularQueue.TabIndex = 0;
             this.lvRegularQueue.UseCompatibleStateImageBehavior = false;
             this.lvRegularQueue.View = System.Windows.Forms.View.Details;
+            this.lvRegularQueue.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lvRegularQueue_MouseClick);
+            // 
+            // colServiceTag
+            // 
+            this.colServiceTag.Text = "Service Tag";
+            this.colServiceTag.Width = 110;
+            // 
+            // colClientName
+            // 
+            this.colClientName.Text = "Client Name";
+            this.colClientName.Width = 98;
+            // 
+            // colDroneModel
+            // 
+            this.colDroneModel.Text = "Drone Model";
+            this.colDroneModel.Width = 107;
+            // 
+            // colServiceProblem
+            // 
+            this.colServiceProblem.Text = "Service Problem";
+            this.colServiceProblem.Width = 125;
+            // 
+            // colServiceCost
+            // 
+            this.colServiceCost.Text = "Service Cost ";
+            this.colServiceCost.Width = 92;
             // 
             // lbFinishedList
             // 
@@ -83,6 +111,7 @@
             this.lbFinishedList.Name = "lbFinishedList";
             this.lbFinishedList.Size = new System.Drawing.Size(134, 173);
             this.lbFinishedList.TabIndex = 2;
+            this.lbFinishedList.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbFinishedList_MouseDoubleClick);
             // 
             // gbServicePriority
             // 
@@ -95,17 +124,6 @@
             this.gbServicePriority.TabStop = false;
             this.gbServicePriority.Text = "Priority";
             // 
-            // rdoRegularService
-            // 
-            this.rdoRegularService.AutoSize = true;
-            this.rdoRegularService.Location = new System.Drawing.Point(20, 24);
-            this.rdoRegularService.Name = "rdoRegularService";
-            this.rdoRegularService.Size = new System.Drawing.Size(101, 17);
-            this.rdoRegularService.TabIndex = 0;
-            this.rdoRegularService.TabStop = true;
-            this.rdoRegularService.Text = "Regular Service";
-            this.rdoRegularService.UseVisualStyleBackColor = true;
-            // 
             // rdoExpressService
             // 
             this.rdoExpressService.AutoSize = true;
@@ -116,6 +134,17 @@
             this.rdoExpressService.TabStop = true;
             this.rdoExpressService.Text = "Express Service";
             this.rdoExpressService.UseVisualStyleBackColor = true;
+            // 
+            // rdoRegularService
+            // 
+            this.rdoRegularService.AutoSize = true;
+            this.rdoRegularService.Location = new System.Drawing.Point(20, 24);
+            this.rdoRegularService.Name = "rdoRegularService";
+            this.rdoRegularService.Size = new System.Drawing.Size(101, 17);
+            this.rdoRegularService.TabIndex = 0;
+            this.rdoRegularService.TabStop = true;
+            this.rdoRegularService.Text = "Regular Service";
+            this.rdoRegularService.UseVisualStyleBackColor = true;
             // 
             // txtClientName
             // 
@@ -176,27 +205,28 @@
             this.lblServiceTag.TabIndex = 10;
             this.lblServiceTag.Text = "Service Tag";
             // 
-            // textBox3
+            // txtServiceProblem
             // 
-            this.textBox3.Location = new System.Drawing.Point(17, 273);
-            this.textBox3.Multiline = true;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(228, 60);
-            this.textBox3.TabIndex = 11;
+            this.txtServiceProblem.Location = new System.Drawing.Point(17, 273);
+            this.txtServiceProblem.Multiline = true;
+            this.txtServiceProblem.Name = "txtServiceProblem";
+            this.txtServiceProblem.Size = new System.Drawing.Size(228, 60);
+            this.txtServiceProblem.TabIndex = 11;
             // 
-            // textBox4
+            // txtServiceCost
             // 
-            this.textBox4.Location = new System.Drawing.Point(17, 369);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 20);
-            this.textBox4.TabIndex = 12;
+            this.txtServiceCost.Location = new System.Drawing.Point(17, 369);
+            this.txtServiceCost.Name = "txtServiceCost";
+            this.txtServiceCost.Size = new System.Drawing.Size(100, 20);
+            this.txtServiceCost.TabIndex = 12;
+            this.txtServiceCost.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtServiceCost_KeyPress);
             // 
-            // textBox5
+            // txtServiceTag
             // 
-            this.textBox5.Location = new System.Drawing.Point(17, 417);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 20);
-            this.textBox5.TabIndex = 13;
+            this.txtServiceTag.Location = new System.Drawing.Point(17, 417);
+            this.txtServiceTag.Name = "txtServiceTag";
+            this.txtServiceTag.Size = new System.Drawing.Size(100, 20);
+            this.txtServiceTag.TabIndex = 13;
             // 
             // AddNewItem
             // 
@@ -211,7 +241,7 @@
             // lblRegularQueue
             // 
             this.lblRegularQueue.AutoSize = true;
-            this.lblRegularQueue.Location = new System.Drawing.Point(427, 5);
+            this.lblRegularQueue.Location = new System.Drawing.Point(404, 5);
             this.lblRegularQueue.Name = "lblRegularQueue";
             this.lblRegularQueue.Size = new System.Drawing.Size(79, 13);
             this.lblRegularQueue.TabIndex = 15;
@@ -220,98 +250,90 @@
             // lblExpressQueue
             // 
             this.lblExpressQueue.AutoSize = true;
-            this.lblExpressQueue.Location = new System.Drawing.Point(427, 140);
+            this.lblExpressQueue.Location = new System.Drawing.Point(404, 140);
             this.lblExpressQueue.Name = "lblExpressQueue";
             this.lblExpressQueue.Size = new System.Drawing.Size(79, 13);
             this.lblExpressQueue.TabIndex = 16;
             this.lblExpressQueue.Text = "Express Queue";
             // 
-            // colServiceCost
-            // 
-            this.colServiceCost.DisplayIndex = 0;
-            this.colServiceCost.Text = "Service Cost ";
-            this.colServiceCost.Width = 92;
-            // 
-            // colServiceTag
-            // 
-            this.colServiceTag.DisplayIndex = 1;
-            this.colServiceTag.Text = "Service Tag";
-            this.colServiceTag.Width = 110;
-            // 
-            // colClientName
-            // 
-            this.colClientName.DisplayIndex = 2;
-            this.colClientName.Text = "Client Name";
-            this.colClientName.Width = 98;
-            // 
-            // colDroneModel
-            // 
-            this.colDroneModel.DisplayIndex = 3;
-            this.colDroneModel.Text = "Drone Model";
-            this.colDroneModel.Width = 107;
-            // 
-            // colServiceProblem
-            // 
-            this.colServiceProblem.Text = "Service Problem";
-            this.colServiceProblem.Width = 125;
-            // 
             // lvExpressQueue
             // 
             this.lvExpressQueue.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4,
-            this.columnHeader5});
+            this.columnHeader6,
+            this.columnHeader7,
+            this.columnHeader8,
+            this.columnHeader9,
+            this.columnHeader10});
             this.lvExpressQueue.HideSelection = false;
-            this.lvExpressQueue.Location = new System.Drawing.Point(185, 160);
+            this.lvExpressQueue.Location = new System.Drawing.Point(162, 158);
             this.lvExpressQueue.Name = "lvExpressQueue";
             this.lvExpressQueue.Size = new System.Drawing.Size(587, 107);
-            this.lvExpressQueue.TabIndex = 17;
+            this.lvExpressQueue.TabIndex = 18;
             this.lvExpressQueue.UseCompatibleStateImageBehavior = false;
             this.lvExpressQueue.View = System.Windows.Forms.View.Details;
+            this.lvExpressQueue.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lvExpressQueue_MouseClick);
             // 
-            // columnHeader1
+            // columnHeader6
             // 
-            this.columnHeader1.DisplayIndex = 1;
-            this.columnHeader1.Text = "Service Tag";
-            this.columnHeader1.Width = 110;
+            this.columnHeader6.Text = "Service Tag";
+            this.columnHeader6.Width = 110;
             // 
-            // columnHeader2
+            // columnHeader7
             // 
-            this.columnHeader2.DisplayIndex = 2;
-            this.columnHeader2.Text = "Client Name";
-            this.columnHeader2.Width = 98;
+            this.columnHeader7.Text = "Client Name";
+            this.columnHeader7.Width = 98;
             // 
-            // columnHeader3
+            // columnHeader8
             // 
-            this.columnHeader3.DisplayIndex = 3;
-            this.columnHeader3.Text = "Drone Model";
-            this.columnHeader3.Width = 107;
+            this.columnHeader8.Text = "Drone Model";
+            this.columnHeader8.Width = 107;
             // 
-            // columnHeader4
+            // columnHeader9
             // 
-            this.columnHeader4.DisplayIndex = 0;
-            this.columnHeader4.Text = "Service Cost ";
-            this.columnHeader4.Width = 92;
+            this.columnHeader9.DisplayIndex = 4;
+            this.columnHeader9.Text = "Service Cost ";
+            this.columnHeader9.Width = 92;
             // 
-            // columnHeader5
+            // columnHeader10
             // 
-            this.columnHeader5.Text = "Service Problem";
-            this.columnHeader5.Width = 125;
+            this.columnHeader10.DisplayIndex = 3;
+            this.columnHeader10.Text = "Service Problem";
+            this.columnHeader10.Width = 125;
+            // 
+            // btnDequeueReg
+            // 
+            this.btnDequeueReg.Location = new System.Drawing.Point(753, 74);
+            this.btnDequeueReg.Name = "btnDequeueReg";
+            this.btnDequeueReg.Size = new System.Drawing.Size(41, 32);
+            this.btnDequeueReg.TabIndex = 19;
+            this.btnDequeueReg.Text = "Done";
+            this.btnDequeueReg.UseVisualStyleBackColor = true;
+            this.btnDequeueReg.Click += new System.EventHandler(this.btnDequeueReg_Click);
+            // 
+            // btnDequeueExp
+            // 
+            this.btnDequeueExp.Location = new System.Drawing.Point(754, 197);
+            this.btnDequeueExp.Name = "btnDequeueExp";
+            this.btnDequeueExp.Size = new System.Drawing.Size(41, 32);
+            this.btnDequeueExp.TabIndex = 19;
+            this.btnDequeueExp.Text = "Done";
+            this.btnDequeueExp.UseVisualStyleBackColor = true;
+            this.btnDequeueExp.Click += new System.EventHandler(this.btnDequeueExp_Click);
             // 
             // DroneServiceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnDequeueExp);
+            this.Controls.Add(this.btnDequeueReg);
             this.Controls.Add(this.lvExpressQueue);
             this.Controls.Add(this.lblExpressQueue);
             this.Controls.Add(this.lblRegularQueue);
             this.Controls.Add(this.AddNewItem);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.txtServiceTag);
+            this.Controls.Add(this.txtServiceCost);
+            this.Controls.Add(this.txtServiceProblem);
             this.Controls.Add(this.lblServiceTag);
             this.Controls.Add(this.lblServiceCost);
             this.Controls.Add(this.lblServiceProblem);
@@ -323,8 +345,8 @@
             this.Controls.Add(this.lbFinishedList);
             this.Controls.Add(this.lvRegularQueue);
             this.Name = "DroneServiceForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DroneServiceForm";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.gbServicePriority.ResumeLayout(false);
             this.gbServicePriority.PerformLayout();
             this.ResumeLayout(false);
@@ -346,9 +368,9 @@
         private System.Windows.Forms.Label lblServiceProblem;
         private System.Windows.Forms.Label lblServiceCost;
         private System.Windows.Forms.Label lblServiceTag;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox txtServiceProblem;
+        private System.Windows.Forms.TextBox txtServiceCost;
+        private System.Windows.Forms.TextBox txtServiceTag;
         private System.Windows.Forms.Button AddNewItem;
         private System.Windows.Forms.Label lblRegularQueue;
         private System.Windows.Forms.Label lblExpressQueue;
@@ -358,11 +380,13 @@
         private System.Windows.Forms.ColumnHeader colServiceCost;
         private System.Windows.Forms.ColumnHeader colServiceProblem;
         private System.Windows.Forms.ListView lvExpressQueue;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.ColumnHeader columnHeader7;
+        private System.Windows.Forms.ColumnHeader columnHeader8;
+        private System.Windows.Forms.ColumnHeader columnHeader9;
+        private System.Windows.Forms.ColumnHeader columnHeader10;
+        private System.Windows.Forms.Button btnDequeueReg;
+        private System.Windows.Forms.Button btnDequeueExp;
     }
 }
 

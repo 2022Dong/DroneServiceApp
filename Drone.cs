@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace DroneServiceApp
 {
@@ -26,7 +27,12 @@ namespace DroneServiceApp
         public void setClientName(string newClientName)
         {
             // The data is formatted as Title case.
-            clientName = newClientName;  // To be fixed.  ToTitleCase(newClientName.ToLower())
+
+            // Creates a TextInfo based on the "en-US" culture.
+            TextInfo myTI = new CultureInfo("en-US", false).TextInfo; // using System.Globalization;
+            clientName = myTI.ToTitleCase(newClientName.ToLower());  // ToLower() - avoid issues with all-caps or mixed-case words.
+            //clientName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(newClientName.ToLower());
+
         }
         public void setDroneModel(string newDroneModel)
         {
@@ -35,7 +41,8 @@ namespace DroneServiceApp
         public void setServiceProblem(string newServiceProblem)
         {
             // the data is formatted as Sentence case.
-            serviceProblem = newServiceProblem;  // To be fixed.
+            string s = newServiceProblem.ToLower();
+            serviceProblem = char.ToUpper(s[0]) + s.Substring(1);
         }
         public void setServiceCost(double newServiceCost) // To be fixed.
         {
@@ -66,7 +73,7 @@ namespace DroneServiceApp
         #endregion
 
         // Constructor
-        Drone()
+        public Drone()
         {}
 
         // Add a display method that returns a string for Client Name and Service Cost
