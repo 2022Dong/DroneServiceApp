@@ -73,7 +73,7 @@
             this.lvRegularQueue.HideSelection = false;
             this.lvRegularQueue.Location = new System.Drawing.Point(162, 21);
             this.lvRegularQueue.Name = "lvRegularQueue";
-            this.lvRegularQueue.Size = new System.Drawing.Size(587, 107);
+            this.lvRegularQueue.Size = new System.Drawing.Size(538, 107);
             this.lvRegularQueue.TabIndex = 0;
             this.lvRegularQueue.UseCompatibleStateImageBehavior = false;
             this.lvRegularQueue.View = System.Windows.Forms.View.Details;
@@ -267,7 +267,7 @@
             this.lvExpressQueue.HideSelection = false;
             this.lvExpressQueue.Location = new System.Drawing.Point(162, 158);
             this.lvExpressQueue.Name = "lvExpressQueue";
-            this.lvExpressQueue.Size = new System.Drawing.Size(587, 107);
+            this.lvExpressQueue.Size = new System.Drawing.Size(538, 107);
             this.lvExpressQueue.TabIndex = 18;
             this.lvExpressQueue.UseCompatibleStateImageBehavior = false;
             this.lvExpressQueue.View = System.Windows.Forms.View.Details;
@@ -302,9 +302,9 @@
             // 
             // btnDequeueReg
             // 
-            this.btnDequeueReg.Location = new System.Drawing.Point(753, 74);
+            this.btnDequeueReg.Location = new System.Drawing.Point(713, 46);
             this.btnDequeueReg.Name = "btnDequeueReg";
-            this.btnDequeueReg.Size = new System.Drawing.Size(41, 32);
+            this.btnDequeueReg.Size = new System.Drawing.Size(78, 56);
             this.btnDequeueReg.TabIndex = 19;
             this.btnDequeueReg.Text = "Done";
             this.btnDequeueReg.UseVisualStyleBackColor = true;
@@ -312,9 +312,9 @@
             // 
             // btnDequeueExp
             // 
-            this.btnDequeueExp.Location = new System.Drawing.Point(754, 197);
+            this.btnDequeueExp.Location = new System.Drawing.Point(713, 185);
             this.btnDequeueExp.Name = "btnDequeueExp";
-            this.btnDequeueExp.Size = new System.Drawing.Size(41, 32);
+            this.btnDequeueExp.Size = new System.Drawing.Size(78, 56);
             this.btnDequeueExp.TabIndex = 19;
             this.btnDequeueExp.Text = "Done";
             this.btnDequeueExp.UseVisualStyleBackColor = true;

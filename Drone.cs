@@ -26,13 +26,8 @@ namespace DroneServiceApp
         }
         public void setClientName(string newClientName)
         {
-            // The data is formatted as Title case.
-
-            // Creates a TextInfo based on the "en-US" culture.
-            TextInfo myTI = new CultureInfo("en-US", false).TextInfo; // using System.Globalization;
-            clientName = myTI.ToTitleCase(newClientName.ToLower());  // ToLower() - avoid issues with all-caps or mixed-case words.
-            //clientName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(newClientName.ToLower());
-
+            // The data is formatted as Title case. Using System.Globalization;
+            clientName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(newClientName.ToLower());  // ToLower() - avoid issues with all-caps or mixed-case words.
         }
         public void setDroneModel(string newDroneModel)
         {
@@ -49,6 +44,7 @@ namespace DroneServiceApp
             serviceCost = newServiceCost;
         }
         #endregion
+
         #region Getters
         public int getServiceTag()
         {
@@ -81,6 +77,5 @@ namespace DroneServiceApp
         {
             return clientName + " $" + serviceCost;
         }
-
     }
 }
