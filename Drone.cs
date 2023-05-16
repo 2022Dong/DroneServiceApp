@@ -37,7 +37,7 @@ namespace DroneServiceApp
         {
             // null case
             if(string.IsNullOrWhiteSpace(newServiceProblem)) { 
-                 serviceProblem = "";
+                 serviceProblem = "Undescribed";
             }
             else
             {
@@ -46,9 +46,16 @@ namespace DroneServiceApp
                 serviceProblem = char.ToUpper(s[0]) + s.Substring(1);
             }                   
         }
-        public void setServiceCost(double newServiceCost) // To be fixed.
+        public void setServiceCost(string newServiceCost)
         {
-            serviceCost = newServiceCost;
+            if (string.IsNullOrWhiteSpace(newServiceCost))
+            {
+                serviceCost = 0;
+            }
+            else
+            {
+                serviceCost = double.Parse(newServiceCost.ToString());
+            }
         }
         #endregion
 

@@ -47,7 +47,6 @@
             this.lblServiceTag = new System.Windows.Forms.Label();
             this.txtServiceProblem = new System.Windows.Forms.TextBox();
             this.txtServiceCost = new System.Windows.Forms.TextBox();
-            this.txtServiceTag = new System.Windows.Forms.TextBox();
             this.AddNewItem = new System.Windows.Forms.Button();
             this.lblRegularQueue = new System.Windows.Forms.Label();
             this.lblExpressQueue = new System.Windows.Forms.Label();
@@ -59,7 +58,9 @@
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnDequeueReg = new System.Windows.Forms.Button();
             this.btnDequeueExp = new System.Windows.Forms.Button();
+            this.numericUpDownServiceTag = new System.Windows.Forms.NumericUpDown();
             this.gbServicePriority.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownServiceTag)).BeginInit();
             this.SuspendLayout();
             // 
             // lvRegularQueue
@@ -221,13 +222,6 @@
             this.txtServiceCost.TabIndex = 12;
             this.txtServiceCost.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtServiceCost_KeyPress);
             // 
-            // txtServiceTag
-            // 
-            this.txtServiceTag.Location = new System.Drawing.Point(17, 417);
-            this.txtServiceTag.Name = "txtServiceTag";
-            this.txtServiceTag.Size = new System.Drawing.Size(100, 20);
-            this.txtServiceTag.TabIndex = 13;
-            // 
             // AddNewItem
             // 
             this.AddNewItem.Location = new System.Drawing.Point(309, 313);
@@ -262,8 +256,8 @@
             this.columnHeader6,
             this.columnHeader7,
             this.columnHeader8,
-            this.columnHeader9,
-            this.columnHeader10});
+            this.columnHeader10,
+            this.columnHeader9});
             this.lvExpressQueue.HideSelection = false;
             this.lvExpressQueue.Location = new System.Drawing.Point(162, 158);
             this.lvExpressQueue.Name = "lvExpressQueue";
@@ -290,13 +284,11 @@
             // 
             // columnHeader9
             // 
-            this.columnHeader9.DisplayIndex = 4;
-            this.columnHeader9.Text = "Service Cost ";
+            this.columnHeader9.Text = "Service Cost";
             this.columnHeader9.Width = 92;
             // 
             // columnHeader10
             // 
-            this.columnHeader10.DisplayIndex = 3;
             this.columnHeader10.Text = "Service Problem";
             this.columnHeader10.Width = 125;
             // 
@@ -320,18 +312,45 @@
             this.btnDequeueExp.UseVisualStyleBackColor = true;
             this.btnDequeueExp.Click += new System.EventHandler(this.btnDequeueExp_Click);
             // 
+            // numericUpDownServiceTag
+            // 
+            this.numericUpDownServiceTag.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownServiceTag.Location = new System.Drawing.Point(17, 418);
+            this.numericUpDownServiceTag.Maximum = new decimal(new int[] {
+            900,
+            0,
+            0,
+            0});
+            this.numericUpDownServiceTag.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numericUpDownServiceTag.Name = "numericUpDownServiceTag";
+            this.numericUpDownServiceTag.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDownServiceTag.TabIndex = 20;
+            this.numericUpDownServiceTag.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
             // DroneServiceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.numericUpDownServiceTag);
             this.Controls.Add(this.btnDequeueExp);
             this.Controls.Add(this.btnDequeueReg);
             this.Controls.Add(this.lvExpressQueue);
             this.Controls.Add(this.lblExpressQueue);
             this.Controls.Add(this.lblRegularQueue);
             this.Controls.Add(this.AddNewItem);
-            this.Controls.Add(this.txtServiceTag);
             this.Controls.Add(this.txtServiceCost);
             this.Controls.Add(this.txtServiceProblem);
             this.Controls.Add(this.lblServiceTag);
@@ -349,6 +368,7 @@
             this.Text = "DroneServiceForm";
             this.gbServicePriority.ResumeLayout(false);
             this.gbServicePriority.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownServiceTag)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -370,7 +390,6 @@
         private System.Windows.Forms.Label lblServiceTag;
         private System.Windows.Forms.TextBox txtServiceProblem;
         private System.Windows.Forms.TextBox txtServiceCost;
-        private System.Windows.Forms.TextBox txtServiceTag;
         private System.Windows.Forms.Button AddNewItem;
         private System.Windows.Forms.Label lblRegularQueue;
         private System.Windows.Forms.Label lblExpressQueue;
@@ -387,6 +406,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader10;
         private System.Windows.Forms.Button btnDequeueReg;
         private System.Windows.Forms.Button btnDequeueExp;
+        private System.Windows.Forms.NumericUpDown numericUpDownServiceTag;
     }
 }
 

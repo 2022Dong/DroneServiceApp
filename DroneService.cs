@@ -16,7 +16,7 @@ namespace DroneServiceApp
         public DroneServiceForm()
         {
             InitializeComponent();
-            
+
             // Create and configure the NumericUpDown control
             serviceTagInput = new NumericUpDown();
             serviceTagInput.Minimum = 100;
@@ -46,33 +46,35 @@ namespace DroneServiceApp
             Drone addDrone = new Drone();
             // Get the current service tag value, default by 100.
             int serviceTag = (int)serviceTagInput.Value;
-            addDrone.setServiceTag(serviceTag);            
+            addDrone.setServiceTag(serviceTag);
             addDrone.setClientName(txtClientName.Text);
             addDrone.setDroneModel(txtDroneModel.Text);
             addDrone.setServiceProblem(txtServiceProblem.Text);
             // RadioButtons selection
-            int priority = GetServicePriority();            
+            int priority = GetServicePriority();
             switch (priority)
             {
                 case 1: // Add drone to regular service queue.
-                    addDrone.setServiceCost(double.Parse(txtServiceCost.Text)); // ...to be fixed. decimal incorrect~~
+                    addDrone.setServiceCost(txtServiceCost.Text);
                     RegularService.Enqueue(addDrone);
-                    displayRegularQueue();                    
+                    displayRegularQueue();
                     incrementServiceTag(); // Auto-increment tag after adding a new item.
+                    //numericUpDownServiceTag.UpdateEditText();
                     break;
 
                 case 2: // Add drone to express service queue. 
                     // 6.6	Before a new service item is added to the Express Queue the service cost must be increased by 15%.
-                    addDrone.setServiceCost(double.Parse(txtServiceCost.Text) * 1.15);// ... emtpy input crashes 
+                    //addDrone.setServiceCost((??? * 1.15).ToString()); // to be fixed.
                     ExpressService.Enqueue(addDrone);
-                    displayExpressQueue();                    
+                    displayExpressQueue();
                     incrementServiceTag(); // Auto-increment tag after adding a new item. 
                     break;
 
-                default:MessageBox.Show("priority unseleted");
+                default:
+                    MessageBox.Show("priority unseleted");
                     break;
-            }            
-            txtServiceTag.Text = addDrone.getServiceTag().ToString(); // to be fixed --- display???
+            }
+            //numericUpDownServiceTag.Text = addDrone.getServiceTag().ToString(); // to be fixed --- display???
             clearInput();
         }
         #endregion
@@ -84,7 +86,7 @@ namespace DroneServiceApp
         {
             DialogResult result = MessageBox.Show("Item fixed?", "Warning", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
-            {          
+            {
                 try
                 {
                     Drone finishedDrone = RegularService.Peek(); // Get the first instance.
@@ -93,10 +95,10 @@ namespace DroneServiceApp
                     RegularService.Dequeue(); // Delete from queue.
                     displayRegularQueue();
                 }
-                catch(InvalidOperationException)
+                catch (InvalidOperationException)
                 {
                     MessageBox.Show("Queue empty.");
-                }       
+                }
             }
         }
 
@@ -156,7 +158,7 @@ namespace DroneServiceApp
             lvRegularQueue.Items.Clear();
             foreach (var eachDrone in RegularService)
             {
-                ListViewItem item = new ListViewItem(eachDrone.getServiceTag().ToString()); // int or string?
+                ListViewItem item = new ListViewItem(eachDrone.getServiceTag().ToString());
                 item.SubItems.Add(eachDrone.getClientName());
                 item.SubItems.Add(eachDrone.getDroneModel());
                 item.SubItems.Add(eachDrone.getServiceProblem());
@@ -183,24 +185,22 @@ namespace DroneServiceApp
         // can only accept a double value with one decimal point.
         private void txtServiceCost_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-        (e.KeyChar != '.'))
-    {
-            e.Handled = true;
-    }
-
-    // only allow one decimal point
-    if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
-    {
-        e.Handled = true;
-    }
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
 
 
         }
         // 6.11	Create a custom method to increment the service tag control,
         // this method must be called inside the “AddNewItem” method before the new service item is added to a queue.
         public void incrementServiceTag()
-        {            
+        {
             serviceTagInput.Value += 10;
         }
 
@@ -216,7 +216,7 @@ namespace DroneServiceApp
             txtDroneModel.Clear();
             txtServiceProblem.Clear();
             txtServiceCost.Clear();
-            txtServiceTag.Clear();
+            //numericUpDownServiceTag.Clear();
         }
         #endregion
 
@@ -245,7 +245,7 @@ namespace DroneServiceApp
             // Display
             txtClientName.Text = selectedDrone.getClientName();
             txtServiceProblem.Text = selectedDrone.getServiceProblem();
-        }        
+        }
 
         // 6.16	Create a double mouse click method that will delete a service item from the finished listbox and remove the same item from the List<T>.
         private void lbFinishedList_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -253,7 +253,7 @@ namespace DroneServiceApp
             int selectedIndex = lbFinishedList.SelectedIndices[0];
             DialogResult result = MessageBox.Show("Do you want to remove the item?", "Warning", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
-            {                
+            {
                 FinishedList.RemoveAt(selectedIndex);
                 displayListbox();
             }
