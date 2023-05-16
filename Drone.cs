@@ -35,9 +35,16 @@ namespace DroneServiceApp
         }
         public void setServiceProblem(string newServiceProblem)
         {
-            // the data is formatted as Sentence case.
-            string s = newServiceProblem.ToLower();
-            serviceProblem = char.ToUpper(s[0]) + s.Substring(1);
+            // null case
+            if(string.IsNullOrWhiteSpace(newServiceProblem)) { 
+                 serviceProblem = "";
+            }
+            else
+            {
+                // the data is formatted as Sentence case.
+                string s = newServiceProblem.ToLower();
+                serviceProblem = char.ToUpper(s[0]) + s.Substring(1);
+            }                   
         }
         public void setServiceCost(double newServiceCost) // To be fixed.
         {

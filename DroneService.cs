@@ -12,9 +12,15 @@ namespace DroneServiceApp
 {
     public partial class DroneServiceForm : Form
     {
+        private NumericUpDown serviceTagInput;
         public DroneServiceForm()
         {
             InitializeComponent();
+            
+            // Create and configure the NumericUpDown control
+            serviceTagInput = new NumericUpDown();
+            serviceTagInput.Minimum = 100;
+            serviceTagInput.Maximum = 900;
         }
         #region Create data structures
 
@@ -38,11 +44,12 @@ namespace DroneServiceApp
         private void AddNewItem_Click(object sender, EventArgs e)
         {
             Drone addDrone = new Drone();
-            addDrone.setServiceTag(100); //...to be fixed.
+            // Get the current service tag value, default by 100.
+            int serviceTag = (int)serviceTagInput.Value;
+            addDrone.setServiceTag(serviceTag);            
             addDrone.setClientName(txtClientName.Text);
             addDrone.setDroneModel(txtDroneModel.Text);
             addDrone.setServiceProblem(txtServiceProblem.Text);
-
             // RadioButtons selection
             int priority = GetServicePriority();            
             switch (priority)
@@ -50,19 +57,22 @@ namespace DroneServiceApp
                 case 1: // Add drone to regular service queue.
                     addDrone.setServiceCost(double.Parse(txtServiceCost.Text)); // ...to be fixed. decimal incorrect~~
                     RegularService.Enqueue(addDrone);
-                    displayRegularQueue();
+                    displayRegularQueue();                    
+                    incrementServiceTag(); // Auto-increment tag after adding a new item.
                     break;
 
                 case 2: // Add drone to express service queue. 
                     // 6.6	Before a new service item is added to the Express Queue the service cost must be increased by 15%.
                     addDrone.setServiceCost(double.Parse(txtServiceCost.Text) * 1.15);// ... emtpy input crashes 
                     ExpressService.Enqueue(addDrone);
-                    displayExpressQueue();
+                    displayExpressQueue();                    
+                    incrementServiceTag(); // Auto-increment tag after adding a new item. 
                     break;
 
                 default:MessageBox.Show("priority unseleted");
                     break;
-            }
+            }            
+            txtServiceTag.Text = addDrone.getServiceTag().ToString(); // to be fixed --- display???
             clearInput();
         }
         #endregion
@@ -173,25 +183,25 @@ namespace DroneServiceApp
         // can only accept a double value with one decimal point.
         private void txtServiceCost_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
-            {
-                e.Handled = true;
-            }
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
+        (e.KeyChar != '.'))
+    {
+            e.Handled = true;
+    }
 
-            // only allow one decimal point
-            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))  // -----to be checked.
-            {
-                e.Handled = true;
-            }
+    // only allow one decimal point
+    if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+    {
+        e.Handled = true;
+    }
+
+
         }
         // 6.11	Create a custom method to increment the service tag control,
         // this method must be called inside the “AddNewItem” method before the new service item is added to a queue.
-        public int incrementServiceTag()
-        {
-            /*int tag = (int)txtServiceTag.Value;
-            tag = tag + 10;
-            txtserviceTag.Value = tag;*/
-            return 0;
+        public void incrementServiceTag()
+        {            
+            serviceTagInput.Value += 10;
         }
 
         // 6.17	Create a custom method that will clear all the textboxes after each service item has been added.
