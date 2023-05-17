@@ -1,4 +1,8 @@
 # DroneServiceApp
-AT3 Performing queue data structure Enqueue&amp;Dequeue
-Enqueue - 2 listViews //
-Dequeue - 1 listBox
+AT3 - Performs queue data structure:
+Queue - Enqueue()/Dequeue()/Peek().
+List - Add()/RemoveAt(). 
+numericUpDown control
+2 listView(s)
+1 listBox
+ect...
