@@ -50,12 +50,18 @@ namespace DroneServiceApp
             addDrone.setClientName(txtClientName.Text);
             addDrone.setDroneModel(txtDroneModel.Text);
             addDrone.setServiceProblem(txtServiceProblem.Text);
+            // Set ServiceCost. string -> double. Parse()-will throw an error VS TryParse()-return boolean value.
+            if (!Double.TryParse(txtServiceCost.Text, out double costInput))
+            {
+                costInput = 0.0;
+            }
+            addDrone.setServiceCost(costInput);
+
             // RadioButtons selection
             int priority = GetServicePriority();
             switch (priority)
             {
                 case 1: // Add drone to regular service queue.
-                    addDrone.setServiceCost(txtServiceCost.Text);
                     RegularService.Enqueue(addDrone);
                     displayRegularQueue();
                     incrementServiceTag(); // Auto-increment tag after adding a new item.
@@ -64,7 +70,7 @@ namespace DroneServiceApp
 
                 case 2: // Add drone to express service queue. 
                     // 6.6	Before a new service item is added to the Express Queue the service cost must be increased by 15%.
-                    //addDrone.setServiceCost((??? * 1.15).ToString()); // to be fixed.
+                    addDrone.setServiceCost(costInput * 1.15);
                     ExpressService.Enqueue(addDrone);
                     displayExpressQueue();
                     incrementServiceTag(); // Auto-increment tag after adding a new item. 
@@ -84,7 +90,7 @@ namespace DroneServiceApp
         // The dequeued item must be added to the List<T> and displayed in the ListBox for finished service items.
         private void btnDequeueReg_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Item fixed?", "Warning", MessageBoxButtons.YesNo);
+            DialogResult result = MessageBox.Show("Is the item completed?", "Warning", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
                 try
@@ -106,7 +112,7 @@ namespace DroneServiceApp
         // The dequeued item must be added to the List<T> and displayed in the ListBox for finished service items.
         private void btnDequeueExp_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Item fixed?", "Warning", MessageBoxButtons.YesNo);
+            DialogResult result = MessageBox.Show("Is the item completed?", "Warning", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
                 try
