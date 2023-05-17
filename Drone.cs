@@ -20,7 +20,7 @@ namespace DroneServiceApp
         private double serviceCost;
 
         #region Setters
-        public void setServiceTag(int newServiceTag)  // To be fixed.
+        public void setServiceTag(int newServiceTag)
         {
             serviceTag = newServiceTag;
         }
@@ -35,16 +35,17 @@ namespace DroneServiceApp
         }
         public void setServiceProblem(string newServiceProblem)
         {
-            // null case
-            if(string.IsNullOrWhiteSpace(newServiceProblem)) { 
-                 serviceProblem = "Undescribed";
+            // Null case.
+            if (string.IsNullOrWhiteSpace(newServiceProblem))
+            {
+                serviceProblem = "Undescribed";
             }
             else
             {
-                // the data is formatted as Sentence case.
+                // The data is formatted as Sentence case.
                 string s = newServiceProblem.ToLower();
                 serviceProblem = char.ToUpper(s[0]) + s.Substring(1);
-            }                   
+            }
         }
         public void setServiceCost(double newServiceCost)
         {
@@ -77,7 +78,7 @@ namespace DroneServiceApp
 
         // Constructor
         public Drone()
-        {}
+        { }
 
         // Add a display method that returns a string for Client Name and Service Cost
         public string displayNameAndCost()

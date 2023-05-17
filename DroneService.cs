@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -10,17 +11,16 @@ using System.Windows.Forms;
 
 namespace DroneServiceApp
 {
+    /* Dongyun Huang ID:30042104
+     * 17/5/2023 v.1
+     * AT3 (Please open the link below to visit project details in the README.md)
+     * VCS: https://github.com/2022Dong/DroneServiceApp
+     */
     public partial class DroneServiceForm : Form
     {
-        private NumericUpDown serviceTagInput;
         public DroneServiceForm()
         {
             InitializeComponent();
-
-            // Create and configure the NumericUpDown control
-            serviceTagInput = new NumericUpDown();
-            serviceTagInput.Minimum = 100;
-            serviceTagInput.Maximum = 900;
         }
         #region Create data structures
 
@@ -44,7 +44,7 @@ namespace DroneServiceApp
         private void AddNewItem_Click(object sender, EventArgs e)
         {
             Drone addDrone = new Drone();
-            // Get the current service tag value, default by 100.
+            // Get the current service tag value, start by 100.
             int serviceTag = (int)serviceTagInput.Value;
             addDrone.setServiceTag(serviceTag);
             addDrone.setClientName(txtClientName.Text);
@@ -61,14 +61,15 @@ namespace DroneServiceApp
             int priority = GetServicePriority();
             switch (priority)
             {
-                case 1: // Add drone to regular service queue.
+                // Add a new drone to regular service queue.
+                case 1:
                     RegularService.Enqueue(addDrone);
                     displayRegularQueue();
                     incrementServiceTag(); // Auto-increment tag after adding a new item.
-                    //numericUpDownServiceTag.UpdateEditText();
                     break;
 
-                case 2: // Add drone to express service queue. 
+                // Add a new drone to express service queue.
+                case 2:
                     // 6.6	Before a new service item is added to the Express Queue the service cost must be increased by 15%.
                     addDrone.setServiceCost(costInput * 1.15);
                     ExpressService.Enqueue(addDrone);
@@ -77,10 +78,9 @@ namespace DroneServiceApp
                     break;
 
                 default:
-                    MessageBox.Show("priority unseleted");
+                    MessageBox.Show("Priority unseleted.");
                     break;
             }
-            //numericUpDownServiceTag.Text = addDrone.getServiceTag().ToString(); // to be fixed --- display???
             clearInput();
         }
         #endregion
@@ -179,7 +179,7 @@ namespace DroneServiceApp
             lvExpressQueue.Items.Clear();
             foreach (var eachDrone in ExpressService)
             {
-                ListViewItem item = new ListViewItem(eachDrone.getServiceTag().ToString()); // int or string?
+                ListViewItem item = new ListViewItem(eachDrone.getServiceTag().ToString());
                 item.SubItems.Add(eachDrone.getClientName());
                 item.SubItems.Add(eachDrone.getDroneModel());
                 item.SubItems.Add(eachDrone.getServiceProblem());
@@ -191,6 +191,7 @@ namespace DroneServiceApp
         // can only accept a double value with one decimal point.
         private void txtServiceCost_KeyPress(object sender, KeyPressEventArgs e)
         {
+            //checks whether is not a control character, not a digit, and not a period (.) character.
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
             {
                 e.Handled = true;
@@ -200,8 +201,6 @@ namespace DroneServiceApp
             {
                 e.Handled = true;
             }
-
-
         }
         // 6.11	Create a custom method to increment the service tag control,
         // this method must be called inside the “AddNewItem” method before the new service item is added to a queue.
@@ -222,7 +221,6 @@ namespace DroneServiceApp
             txtDroneModel.Clear();
             txtServiceProblem.Clear();
             txtServiceCost.Clear();
-            //numericUpDownServiceTag.Clear();
         }
         #endregion
 
